@@ -241,6 +241,6 @@ out/
 projectkorra.iml
 
 *.iml
-NationMC-Git.iml
+NationMC-Lobby.iml
 .DS_Store
 src/.DS_Store
