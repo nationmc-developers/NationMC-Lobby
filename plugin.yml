@@ -1,0 +1,17 @@
+version: 1.0
+name: NationMC_Lobby
+main: com.nation.lobby.Main
+author: Wiz_Techno
+description: Lobby plugin for NationMC
+depend: [WorldGuard, WorldEdit]
+commands:
+  won:
+    description: For win effect in PvP Lobby
+    permission: op
+    permission-message: Admin+ Debug Command
+  pvp:
+    description: Queue PvP
+  e:
+    description: Event Module
+    permission: group.admin
+    permission-message: Admin+ Command.
