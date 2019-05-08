@@ -3,6 +3,7 @@ package com.nation.lobby;
 import com.nation.lobby.eventmodule.EventCommands;
 import com.nation.lobby.eventmodule.EventListeners;
 import com.nation.lobby.listeners.GeneralMovementListener;
+import com.nation.lobby.pvpmanager.ArenaState;
 import com.nation.lobby.pvpmanager.PvPListener;
 import com.nation.lobby.pvpmanager.QueuePvPCommand;
 import com.nation.lobby.pvpmanager.Win;
@@ -20,10 +21,10 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable()
     {
-        System.out.println("[NationMC] NationMC Core: Enabled");
+        System.out.println("NationMC Lobby: Enabled");
         getCommand("e").setExecutor(new EventCommands());
         getCommand("won").setExecutor(new Win(this));
-        getCommand("pvp").setExecutor(new QueuePvPCommand());
+        getCommand("pvp").setExecutor(new QueuePvPCommand(this));
 
 
         Bukkit.getPluginManager().registerEvents(new PvPListener(), this);
@@ -43,7 +44,8 @@ public class Main extends JavaPlugin {
         {
             System.out.println("Detected WorldEdit. Using as Hook.");
         }
-        QueuePvPCommand.PvPState = "IDLE";
+        QueuePvPCommand.PvPState = ArenaState.IDLE;
+        QueuePvPCommand.prepareMode = false;
         for (World w : Bukkit.getWorlds())
         {
             EventCommands.flags.put(w, Arrays.asList(false, false, true));
@@ -53,6 +55,6 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable()
     {
-        System.out.println("NationMC Core: Disabled");
+        System.out.println("NationMC Lobby: Disabled");
     }
 }

@@ -1,12 +1,14 @@
 package com.nation.lobby.pvpmanager;
 
-import org.bukkit.entity.Player;
 import com.sk89q.worldguard.bukkit.WGBukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.Random;
 
 public class PvPListener implements Listener {
 
@@ -14,7 +16,7 @@ public class PvPListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent e)
     {
         Player p = e.getPlayer();
-        if (QueuePvPCommand.PvPState.equalsIgnoreCase("ACTIVE"))
+        if (QueuePvPCommand.PvPState == ArenaState.ACTIVE)
         {
             try
             {
@@ -34,20 +36,36 @@ public class PvPListener implements Listener {
             } catch (NullPointerException n)
             {
             }
+            if (QueuePvPCommand.prepareMode)
+            {
+                if (p == QueuePvPCommand.QueueOne || p == QueuePvPCommand.QueueTwo)
+                {
+                    if (new Random().nextInt(2) == 1)
+                    {
+                        e.setCancelled(true);
+                    }
+                }
+            }
         }
+
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent e) {
-        if (e.getPlayer() == QueuePvPCommand.QueueOne) {
+    public void onPlayerQuit(PlayerQuitEvent e)
+    {
+        if (e.getPlayer() == QueuePvPCommand.QueueOne)
+        {
 
-            if (QueuePvPCommand.PvPState.equalsIgnoreCase("ACTIVE")) {
+            if (QueuePvPCommand.PvPState == ArenaState.ACTIVE)
+            {
                 QueuePvPCommand.endpvp(QueuePvPCommand.QueueOne, QueuePvPCommand.QueueTwo, QueuePvPCommand.QueueTwo);
-            } else {
+            } else
+            {
                 QueuePvPCommand.QueueOne = null;
             }
 
-        } else if (e.getPlayer() == QueuePvPCommand.QueueTwo) {
+        } else if (e.getPlayer() == QueuePvPCommand.QueueTwo)
+        {
             QueuePvPCommand.endpvp(QueuePvPCommand.QueueOne, QueuePvPCommand.QueueTwo, QueuePvPCommand.QueueOne);
         }
     }
@@ -65,3 +83,4 @@ public class PvPListener implements Listener {
         }
     }
 }
+

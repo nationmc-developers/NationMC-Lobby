@@ -3,7 +3,7 @@ name: NationMC_Lobby
 main: com.nation.lobby.Main
 author: Wiz_Techno
 description: Lobby plugin for NationMC
-depend: [WorldGuard, WorldEdit]
+depend: [WorldGuard, WorldEdit, TitleAPI]
 commands:
   won:
     description: For win effect in PvP Lobby
